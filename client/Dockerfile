@@ -12,13 +12,14 @@ FROM nginx:alpine
 # Create non-root user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
+RUN mkdir -p /var/cache/nginx /var/run/nginx \
+    && chown -R appuser:appgroup /var/cache/nginx /var/run/nginx /usr/share/nginx/html
+
 COPY --from=build /app/build /usr/share/nginx/html
 
 
 EXPOSE 80
 
-# Set permissions and switch to non-root user
-RUN chown -R appuser:appgroup /usr/share/nginx/html
 USER appuser
 
 CMD ["nginx", "-g", "daemon off;"]
