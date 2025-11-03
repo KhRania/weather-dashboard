@@ -1,0 +1,24 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: weather_server
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+    image: raniakh/weather-dashboard-server
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: weather_client
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+    image: raniakh/weather-dashboard-client
+    restart: unless-stopped
