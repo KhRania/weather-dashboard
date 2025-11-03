@@ -4,10 +4,10 @@ services:
       context: ./server
       dockerfile: Dockerfile
     container_name: weather_server
-    ports:
+     ports:
       - "5000:5000"
-    environment:
-      - NODE_ENV=production
+     env_file:
+      - ./server/.env  
     image: raniakh/weather-dashboard-server
     restart: unless-stopped
 
@@ -15,6 +15,10 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+      args:
+        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}
+    environment:
+      - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
     container_name: weather_client
     ports:
       - "3000:8080"
