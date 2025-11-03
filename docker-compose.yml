@@ -17,7 +17,7 @@ services:
       dockerfile: Dockerfile
     container_name: weather_client
     ports:
-      - "3000:80"
+      - "3000:8080"
     depends_on:
       - server
     image: raniakh/weather-dashboard-client
